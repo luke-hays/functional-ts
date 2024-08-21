@@ -45,3 +45,12 @@ We do not need to provide input, nor return some output.
 A function that takes zero input, and always returns the same value is a *constant* function. Functions that take input, but return no value are probably going to have associated side effects.
 
 Importantly, no inputs and no return value are side-effectful.
+
+### First class objects
+
+Functions are first class objects - meaning they can be treated similarily to other data types (assigned to const, passed or returned to function). A function that maps to normal data types are first order functions. Functions that receive or output other functions are higher order functions.
+
+Side note: a predicate function - returns a boolean value.
+
+Common examples are find, reduce, map in JS/TS. The *reduce* function is versatile enough that it can be used to implement any HOC on any function in Array.prototype.
+
