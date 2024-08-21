@@ -15,6 +15,9 @@ const double = (x: number): number => x*2;
 
 This can be any number of parameters that combine to form the output.
 
+---
+
+
 ### What is a pure function?
 
 A pure function is a function whose return value depends *entirely* on the parameters passed in.
@@ -23,11 +26,17 @@ As a corollary, an impure function has *side effects* or it may be utilizing som
 
 As an example, reaching out to a service for data or running log statements would be impure functions as they are not entirely dependent on their input.
 
+---
+
+
 ### Referential transparency
 
 A benefit of function purity is that a function, given a particular set of parameters, will always return the same value. If a value has already been calculated, we can replace any future calls with the result of a previous operation.
 
 Memoization relies on this fact, and relies on the functions being pure.
+
+---
+
 
 ### Empty sets
 

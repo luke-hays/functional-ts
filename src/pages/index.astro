@@ -1,24 +1,82 @@
 ---
+import {Image} from 'astro:assets';
+
 import Layout from '../layouts/Layout.astro';
+import logo from '../assets/logo.svg'
 
 const notes = await Astro.glob('../components/*.mdx')
 ---
 
 <Layout>
 	<header>
-		<h1>Functional Programming</h1>
+		<Image src={logo} alt=""/>
 	</header>
 	<main>
+		<h1>Functional Programming</h1>
 		{notes.map(component => {
 			const Content = component.Content
-			return <Content />
+
+			return (
+				<section>
+					<Content />
+				</section>
+			)
 		})}
 	</main>
 	<footer>
-		<a>Code Repo</a>
+		<div class="footer__layout">
+			<a href="https://github.com/luke-hays/functional-ts" target="_blank" rel="noopener noreferrer">Code Repo</a>
+		</div>
 	</footer>
 </Layout>
 
 <style>
+	body {
+		display: grid;
+		grid-template-areas:
+			"header"
+			"main"
+			"footer";
+		grid-template-rows: 3rem auto 3rem;
+	}
 
+	header {
+		grid-area: header;
+		height: 3rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	main {
+		grid-area: main;
+		margin: 0 2rem;
+	}
+
+	section {
+		margin: 0 1rem;
+	}
+
+	footer {
+		grid-area: footer;
+	}
+
+	.footer__layout {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	a:hover {
+		color: var(--color-primary-highlight);
+	}
+
+	h1 {
+		margin-top: .5rem;
+	}
 </style>
