@@ -17,7 +17,6 @@ This can be any number of parameters that combine to form the output.
 
 ---
 
-
 ### What is a pure function?
 
 A pure function is a function whose return value depends *entirely* on the parameters passed in.
@@ -28,7 +27,6 @@ As an example, reaching out to a service for data or running log statements woul
 
 ---
 
-
 ### Referential transparency
 
 A benefit of function purity is that a function, given a particular set of parameters, will always return the same value. If a value has already been calculated, we can replace any future calls with the result of a previous operation.
@@ -36,7 +34,6 @@ A benefit of function purity is that a function, given a particular set of param
 Memoization relies on this fact, and relies on the functions being pure.
 
 ---
-
 
 ### Empty sets
 
@@ -46,6 +43,8 @@ A function that takes zero input, and always returns the same value is a *consta
 
 Importantly, no inputs and no return value are side-effectful.
 
+---
+
 ### First class objects
 
 Functions are first class objects - meaning they can be treated similarily to other data types (assigned to const, passed or returned to function). A function that maps to normal data types are first order functions. Functions that receive or output other functions are higher order functions.
@@ -54,3 +53,4 @@ Side note: a predicate function - returns a boolean value.
 
 Common examples are find, reduce, map in JS/TS. The *reduce* function is versatile enough that it can be used to implement any HOC on any function in Array.prototype.
 
+---
