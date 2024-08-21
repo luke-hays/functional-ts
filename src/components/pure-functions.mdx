@@ -1,0 +1,38 @@
+## Pure Functions
+
+### Function definition
+
+Function - a construct where one more inputs produce an output, or mapping incoming inputs to a resulting output. 
+
+Taken a bit farther - both input and output values can be thought of as sets of all possible values within that set.
+
+```typescript
+// Both incoming and outgoing types are numbers
+// This function acts as a mapping that maps a number to a doubled number
+// Both values are any number within the set of all numbers
+const double = (x: number): number => x*2;
+```
+
+This can be any number of parameters that combine to form the output.
+
+### What is a pure function?
+
+A pure function is a function whose return value depends *entirely* on the parameters passed in.
+
+As a corollary, an impure function has *side effects* or it may be utilizing some sort of potentially undependable outside context to perform its task.
+
+As an example, reaching out to a service for data or running log statements would be impure functions as they are not entirely dependent on their input.
+
+### Referential transparency
+
+A benefit of function purity is that a function, given a particular set of parameters, will always return the same value. If a value has already been calculated, we can replace any future calls with the result of a previous operation.
+
+Memoization relies on this fact, and relies on the functions being pure.
+
+### Empty sets
+
+We do not need to provide input, nor return some output.
+
+A function that takes zero input, and always returns the same value is a *constant* function. Functions that take input, but return no value are probably going to have associated side effects.
+
+Importantly, no inputs and no return value are side-effectful.

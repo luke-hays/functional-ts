@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const notes = await Astro.glob('../components/*.mdx')
 ---
 
 <Layout>
@@ -7,7 +9,10 @@ import Layout from '../layouts/Layout.astro';
 		<h1>Functional Programming</h1>
 	</header>
 	<main>
-
+		{notes.map(component => {
+			const Content = component.Content
+			return <Content />
+		})}
 	</main>
 	<footer>
 		<a>Code Repo</a>
