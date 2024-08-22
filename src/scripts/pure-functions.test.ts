@@ -76,7 +76,6 @@ test('compose will compose two functions together', () => {
 
 test('customFlow will handle one function supplied', () => {
   const len = (s: string): number => s.length
-  const double = (n: number): number => n * 2
 
   const customResult = customFlow(len)
   const fptsResults = flow(len)

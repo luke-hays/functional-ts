@@ -1,4 +1,4 @@
-import { pipe, flow } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import type { Predicate } from "fp-ts/lib/Predicate";
 
 // This function takes two arguements, a predicate and a list of generic type T
