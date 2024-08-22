@@ -1,5 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
 import type { Predicate } from "fp-ts/lib/Predicate";
-
 
 // This function takes two arguements, a predicate and a list of generic type T
 // Instead of being defined on the Array prototype, we pass it in.
@@ -39,3 +39,15 @@ export const findV2 = <T>(pred: Predicate<T>) =>
 
 // This is how currying looks
 // const result = findV2<number>(x => x % 2 === 0)([1,2,3,4,5,6]);
+
+// Alternatively with pipe
+const result = pipe(
+  // pipe's first parameter is our data
+  [1,2,3,4,5,6],
+  // the second, and subsequent, parameter are functions
+  findV2((x) => x % 2 === 0)
+)
+// We don't need to explicitely state a type with pipe. It'll be inferred from our data
+// The type of the value returned by the last function will be the type of the result
+
+// flow is similar but does not take a data parameter. It can be later used as an invocation with some data passed in
