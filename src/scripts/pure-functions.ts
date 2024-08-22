@@ -1,0 +1,41 @@
+import type { Predicate } from "fp-ts/lib/Predicate";
+
+
+// This function takes two arguements, a predicate and a list of generic type T
+// Instead of being defined on the Array prototype, we pass it in.
+
+// A note on TypeScript:
+// <T>(arg: T): T denotes a generic type variable
+// This works over a range of types, and will be inferred based on parameters
+export const find = <T>(pred: Predicate<T>, ts: T[]): T | undefined => {
+  return ts.reduce((prev: T | undefined, curr) => {
+    // If previously found, return that item on every call of the reducer
+    if (prev) return prev;
+
+    // If the current item satisfies the predicate, return it
+    if (pred(curr)) return curr;
+
+    // Else keep returning undefined
+    return undefined;
+  }, undefined)
+};
+
+// A common practice is to take parameters one by one
+// And return a function that takes the remaining parameters
+// Always pass the data that the functions works with as the last parameter
+// You "configure" the function by feeding configuration parameters until its ready for data
+// predicate here is a configuration, ts: T[] is data
+export const findV2 = <T>(pred: Predicate<T>) => 
+  // Or: this takes only a predicate, and returns a function
+  // This approach is called curryin
+  (ts: T[]): T | undefined => {
+    // The predicate logic is now captured by closure
+    return ts.reduce((prev: T | undefined, curr) => {
+      if (prev) return prev
+      if (pred(curr)) return curr
+      return undefined
+    }, undefined)
+  }
+
+// This is how currying looks
+// const result = findV2<number>(x => x % 2 === 0)([1,2,3,4,5,6]);
