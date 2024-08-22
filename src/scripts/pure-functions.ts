@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { pipe, flow } from "fp-ts/lib/function";
 import type { Predicate } from "fp-ts/lib/Predicate";
 
 // This function takes two arguements, a predicate and a list of generic type T
@@ -51,3 +51,19 @@ const result = pipe(
 // The type of the value returned by the last function will be the type of the result
 
 // flow is similar but does not take a data parameter. It can be later used as an invocation with some data passed in
+
+// This function has three generic types given as <A, B, C>
+// And it will compose two functions, one of type A => B and another of B => C
+// Using this combination we can call the two functions such that our return type is a function (Type A) => C
+export const compose = <A, B, C>(fn1: (a: A) => B, fn2: (a: B) => C) => (a: A) => fn2(fn1(a))
+
+// CustomFlow is a custom implementation of fp-ts's flow function
+// We need to pass an array of functions that will return each function composed together
+export const customFlow = <T>(...fns: Array<(a: T) => T>) =>
+  fns.reduce((prev, curr) => compose(prev, curr))
+
+
+const len = (s: string): number => s.length
+const double = (n: number): number => n * 2
+
+compose(len, double)

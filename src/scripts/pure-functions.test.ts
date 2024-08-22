@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { find, findV2 } from './pure-functions'
+import { find, findV2, compose, customFlow } from './pure-functions'
 import { pipe } from 'fp-ts/lib/function'
 
 test('find function can return the first value found using a predicate', () => {
@@ -63,4 +63,32 @@ test('findV2 function can return the first value found using a predicate', () =>
   expect(undefinedFound).toBe(undefined)
   expect(notFoundEmpty).toBe(undefined)
   expect(notFoundNonExistant).toBe(undefined)
+})
+
+test('compose will compose two functions together', () => {
+  const len = (s: string): number => s.length
+  const double = (n: number): number => n * 2
+
+  const f = compose(len, double)
+
+  expect(f('aaa')).toBe(6)
+})
+
+test('customFlow will compose two functions together', () => {
+  const len = (s: string): number => s.length
+  const double = (n: number): number => n * 2
+
+  const f = compose(len, double)
+
+  expect(f('aaa')).toBe(6)
+})
+
+test('customFlow will compose multiple functions together', () => {
+  const len = (s: string): number => s.length
+  const double = (n: number): number => n * 2
+  const castToString = <T extends Object>(val: T) => val.toString()
+
+  const f = customFlow<string>(len, double, double, castToString)
+
+  expect(f('aaa')).toBe('12')
 })
