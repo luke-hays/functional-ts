@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { find, findV2, compose, customFlow } from './pure-functions'
-import { pipe } from 'fp-ts/lib/function'
+import { pipe, flow } from 'fp-ts/lib/function'
 
 test('find function can return the first value found using a predicate', () => {
   const predicateNumber = (x: number) => x % 2 === 0
@@ -69,18 +69,29 @@ test('compose will compose two functions together', () => {
   const len = (s: string): number => s.length
   const double = (n: number): number => n * 2
 
-  const f = compose(len, double)
+  const f = compose(len)(double)
 
   expect(f('aaa')).toBe(6)
+})
+
+test('customFlow will handle one function supplied', () => {
+  const len = (s: string): number => s.length
+  const double = (n: number): number => n * 2
+
+  const customResult = customFlow(len)
+  const fptsResults = flow(len)
+
+  expect(customResult('aaa')).toEqual(fptsResults('aaa'))
 })
 
 test('customFlow will compose two functions together', () => {
   const len = (s: string): number => s.length
   const double = (n: number): number => n * 2
 
-  const f = compose(len, double)
+  const customResult = customFlow(len, double)
+  const fptsResults = flow(len, double)
 
-  expect(f('aaa')).toBe(6)
+  expect(customResult('aaa')).toEqual(fptsResults('aaa'))
 })
 
 test('customFlow will compose multiple functions together', () => {
@@ -88,7 +99,8 @@ test('customFlow will compose multiple functions together', () => {
   const double = (n: number): number => n * 2
   const castToString = <T extends Object>(val: T) => val.toString()
 
-  const f = customFlow<string>(len, double, double, castToString)
+  const customResult = customFlow(len, double, double, castToString)
+  const fptsResults = flow(len, double, double, castToString)
 
-  expect(f('aaa')).toBe('12')
+  expect(customResult('aaa')).toEqual(fptsResults('aaa'))
 })

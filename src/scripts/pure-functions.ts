@@ -55,15 +55,11 @@ const result = pipe(
 // This function has three generic types given as <A, B, C>
 // And it will compose two functions, one of type A => B and another of B => C
 // Using this combination we can call the two functions such that our return type is a function (Type A) => C
-export const compose = <A, B, C>(fn1: (a: A) => B, fn2: (a: B) => C) => (a: A) => fn2(fn1(a))
+export const compose = <A, B>(fn: (a: A) => B) => <C>(fn2: (b: B) => C) => (a: A) => fn2(fn(a))
 
 // CustomFlow is a custom implementation of fp-ts's flow function
 // We need to pass an array of functions that will return each function composed together
-export const customFlow = <T>(...fns: Array<(a: T) => T>) =>
-  fns.reduce((prev, curr) => compose(prev, curr))
+// Any usage here is sort of awkward, but I've found the generic inference to be somewhat frustrating
+// This might be why fp-ts limits how many variables can be passed in
+export const customFlow = (...fns: Array<(a: any) => any>) => fns.reduce((prev, curr) => compose(prev)(curr))
 
-
-const len = (s: string): number => s.length
-const double = (n: number): number => n * 2
-
-compose(len, double)
