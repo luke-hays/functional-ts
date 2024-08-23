@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { find, findV2, compose, customFlow, customPipe } from './pure-functions'
+import { find, findV2, compose, customFlow, customPipe } from '../functions/pure-functions'
 import { pipe, flow } from 'fp-ts/lib/function'
 
 test('find function can return the first value found using a predicate', () => {
