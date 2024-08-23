@@ -55,3 +55,42 @@ Common examples are find, reduce, map in JS/TS. The *reduce* function is versati
 
 ---
 
+### Currying
+
+A common pratice is to take parameters one by one and return a function. This function will take the remaining parameters.
+
+The data that these functions will work with will be the last parameter.
+
+This is an example implementation of `Array.prototype.find` using this concept.
+
+```typescript
+// this only takes a predicate, and returns a function
+export const find = <T>(pred: Predicate<T>) => 
+  (ts: T[]): T | undefined => {
+    // The predicate logic is now captured by closure
+    return ts.reduce((prev: T | undefined, curr) => {
+      if (prev) return prev
+      if (pred(curr)) return curr
+      return undefined
+    }, undefined)
+  }
+```
+
+This is an example of currying.
+
+```typescript
+const result = find<number>(x => x % 2 === 0)([1,2,3,4,5,6]);
+```
+
+This is pretty cumbersome to work with - fp-ts has *pipe* and *flow* methods to make this experience better.
+
+```typescript
+const result = pipe(
+  // pipe's first parameter is our data
+  [1,2,3,4,5,6],
+  // the second, and subsequent, parameters are functions
+  find((x) => x % 2 === 0)
+)
+```
+
+The type will be inferred properly from our value and function parameters. flow works similarily but does not take an initial data value.

@@ -27,7 +27,7 @@ export const find = <T>(pred: Predicate<T>, ts: T[]): T | undefined => {
 // predicate here is a configuration, ts: T[] is data
 export const findV2 = <T>(pred: Predicate<T>) => 
   // Or: this takes only a predicate, and returns a function
-  // This approach is called curryin
+  // This approach is called currying
   (ts: T[]): T | undefined => {
     // The predicate logic is now captured by closure
     return ts.reduce((prev: T | undefined, curr) => {
