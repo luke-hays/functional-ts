@@ -63,3 +63,4 @@ export const compose = <A, B>(fn: (a: A) => B) => <C>(fn2: (b: B) => C) => (a: A
 // This might be why fp-ts limits how many variables can be passed in
 export const customFlow = (...fns: Array<(a: any) => any>) => fns.reduce((prev, curr) => compose(prev)(curr))
 
+export const customPipe = <T>(value: T, ...fns: Array<(a: any) => any>) => customFlow(...fns)(value)

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { find, findV2, compose, customFlow } from './pure-functions'
+import { find, findV2, compose, customFlow, customPipe } from './pure-functions'
 import { pipe, flow } from 'fp-ts/lib/function'
 
 test('find function can return the first value found using a predicate', () => {
@@ -102,4 +102,14 @@ test('customFlow will compose multiple functions together', () => {
   const fptsResults = flow(len, double, double, castToString)
 
   expect(customResult('aaa')).toEqual(fptsResults('aaa'))
+})
+
+test('customPipe will compose multiple functions and run them on supplied values', () => {
+  const len = (s: string): number => s.length
+  const double = (n: number): number => n * 2
+  
+  const customResult = customPipe('aaa', len, double, double)
+  const fptsResults = pipe('aaa', len, double, double)
+
+  expect(customResult).toEqual(fptsResults)
 })
